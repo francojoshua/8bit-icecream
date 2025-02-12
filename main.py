@@ -19,6 +19,11 @@ background = pygame.image.load('background.png')
 cancel_image = pygame.image.load('cancel.png')
 
 level_one, level_two = [], []
+leveL_three = []
+
+for i in range(3):
+    leveL_three.append(pygame.image.load(f"2layer/{i}.png"))
+
 for i in range(len(flavors)):
     level_one.append(pygame.image.load(f'0layer/{i}.png'))
     level_two.append(pygame.image.load(f'1layer/{i}.png'))
@@ -60,7 +65,7 @@ def is_correct_order(order_components, correct_order_components):
 
 
 created_order, created_fudge, created_sprinkles = [], False, False
-correct_order, correct_sprinkles, correct_fudge = generate_order(2)
+correct_order, correct_sprinkles, correct_fudge = generate_order(3)
 
 
 order_texts = []
@@ -124,7 +129,7 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             for idx, flavor_rect in enumerate(flavor_rectangles):
-                if flavor_rect.collidepoint(event.pos) and len(created_order) != 2:
+                if flavor_rect.collidepoint(event.pos) and len(created_order) != 3:
                     created_order.append(idx)
                     play_sound(click_sound)
 
@@ -151,7 +156,7 @@ while running:
                     pygame.mixer.Sound.play(finish_sound)
                     pygame.mixer.music.stop()
 
-                    n_scoops = random.randint(1, 2)
+                    n_scoops = random.randint(1, 3)
                     correct_order, correct_sprinkles, correct_fudge = generate_order(n_scoops)
                     created_sprinkles = False
                     created_fudge = False
