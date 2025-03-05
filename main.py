@@ -1,3 +1,6 @@
+# This CSP project was a collaboration of two students.
+# All images used in project are unique.
+
 import random
 import pygame
 from pygame.locals import *
@@ -22,7 +25,7 @@ instructions = [
     "Press delete to clear order",
 ]
 
-# Font
+# Font (this font was gathered from FontStruct)
 font = pygame.font.Font('stardew-valley-stonks.ttf', 32)
 instr_font = pygame.font.Font('stardew-valley-stonks.ttf', 20)
 
@@ -32,21 +35,16 @@ background = pygame.image.load('background.png')
 cancel_image = pygame.image.load('cancel.png')
 instruction_image = pygame.image.load('instructions.png')
 
-level_one, level_two, level_three = [], [], []
-
-for i in range(len(flavors)):
-    level_one.append(pygame.image.load(f'0layer/{i}.png'))
-    level_two.append(pygame.image.load(f'1layer/{i}.png'))
-    level_three.append(pygame.image.load(f"2layer/{i}.png"))
-
 cancel_rectangle = Rect(475, 400, 91, 91)
 finish_rectangle = Rect(33, 379, 189, 86)
 
 
 def generate_order(n_scoops):
+    if n_scoops > 3:
+        n_scoops = 3
     order = []
 
-    for _ in range(n_scoops):
+    for i in range(n_scoops):
         num = random.randint(0, len(flavors) - 1)
         order.append(num)
 
@@ -54,7 +52,6 @@ def generate_order(n_scoops):
 
 
 instructions = [instr_font.render(item, True, (119, 113, 120)) for item in instructions]
-
 
 def is_correct_order(order, correct_order):
     if len(order) != len(correct_order):
@@ -115,7 +112,7 @@ while running:
 
             if finish_rectangle.collidepoint(event.pos):
                 if is_correct_order(created_order, correct_order):
-                    n_scoops = random.randint(1, 3)
+                    n_scoops = random.randint(1, 5)
                     correct_order = generate_order(n_scoops)
                     created_order.clear()
                     update_text()
